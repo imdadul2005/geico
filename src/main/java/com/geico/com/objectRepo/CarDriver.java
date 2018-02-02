@@ -31,8 +31,8 @@ public class CarDriver {
     @FindBy (xpath = ".//*[@id='employmentStatus']") WebElement employSelect;
 
     // This list will return all the radio button with primary . Use of radio can be alternate option
-    @FindAll(@FindBy (xpath ="//input[contains(@id,'gender')]")) List<WebElement> gender;
-    @FindAll(@FindBy (xpath ="//input[contains(@id,'ownOrRentHome')]")) List<WebElement> ownOrRent;
+    @FindAll(@FindBy (xpath ="//label[contains(@for,'gender')]")) List<WebElement> gender;
+    @FindAll(@FindBy (xpath ="//label[contains(@for,'ownOrRentHome')]")) List<WebElement> ownOrRent;
 
 
     public WebElement getMaritalStatusSelect() {
