@@ -23,11 +23,27 @@ public class DetailPage {
 
     }
 
+    public WebElement getSelectNo() {
+        return selectNo;
+    }
+
+    @FindBy(xpath = ".//*[@id='discountForm']/div[1]/div[3]/div[2]/div/div/div/div[2]/div[2]/label") WebElement selectNo;
     @FindAll(@FindBy (xpath ="//div[@class='radio-button-group']/div/input"))  List<WebElement> defenseDriver;
     @FindAll(@FindBy (xpath =".//form[@id='discountForm']/div[1]/div[3]/div[3]/div[1]/div/div/div"))  List<WebElement> group;
     @FindBy (xpath = ".//input[@id='email']") WebElement emailAddress;
     @FindBy (xpath = "//div[@class='page-group']/div/div[2]/label") WebElement keepOriginal;
     @FindBy(xpath = ".//*[@id='submitButton']") WebElement submit;
+    @FindBy (xpath = ".//*[@id='email']") WebElement email;
+
+    public WebElement getContinue1() {
+        return continue1;
+    }
+
+    @FindBy (xpath = ".//*[@id='auto-coverage-summary-modal']/div/div/button") WebElement continue1;
+
+    public WebElement getEmail() {
+        return email;
+    }
 
     public List<WebElement> getDefenseDriver() {
         return defenseDriver;

@@ -21,6 +21,7 @@ public class HomePage {
         PageFactory.initElements(driver,this);
     }
 
+
     @FindBy(xpath = ".//*[@id='submitButton']") WebElement submit;
     @FindBy(xpath = ".//*[@id='zip']") WebElement zipcode;
 

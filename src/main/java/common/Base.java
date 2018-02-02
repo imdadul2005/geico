@@ -24,6 +24,10 @@ public class Base {
 
     public static final String redColor = "#b6091a";
     public static final String blackColor = "#222222";
+    public static final String errorMSG  = "Sorry for the inconvenience";
+    public static boolean testPage = true;
+    public static boolean test = true;
+    public  static  final  String incorrectMsg = "Incorrect page appeared.";
 
     private Date getTime(long millis) {
         Calendar calendar = Calendar.getInstance();
@@ -61,6 +65,7 @@ public class Base {
         return driver;
 
     }
+
     public static void cleanUp(){
         driver.close();
     }
@@ -223,6 +228,11 @@ public class Base {
     public void waitUntilSelectable(By locator){
         WebDriverWait wait = new WebDriverWait(driver, 10);
         boolean element = wait.until(ExpectedConditions.elementToBeSelected(locator));
+    }
+
+    public void waitUntilWebPageUpdated(String urlPart){
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        boolean element = wait.until(ExpectedConditions.urlContains(urlPart));
     }
 
     public void waitUntilVisible(WebElement element){
