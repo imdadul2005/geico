@@ -9,45 +9,26 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.openqa.selenium.support.Color;
 import utility.DataReader;
 
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class QuotaTest extends Base {
 
     WebDriver driver;
 
-  /*  @BeforeClass
+    @BeforeClass
     public void setUP() throws IOException {
         driver = getLocalDriver("Windows", "chrome");
         setUp("http://www.geico.com");
     }
-*/
-    @Test
-    public void dataReader() throws IOException {
 
-        DataReader dr = new DataReader();
-        String [][] data = dr.fileReader1("C:\\Users\\imdadul\\IdeaProjects\\Geico\\data\\us-500.xlsx");
-        System.out.println(data.toString());
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-   /* @Test(priority = 0)
+    @Test(priority = 0)
     public void test() throws InterruptedException {
         HomePage hp = new HomePage(driver);
         hp.getSubmit().click();
@@ -73,12 +54,11 @@ public class QuotaTest extends Base {
         // Assert that clicking next button on this page will change How is this vehicle primarily used? color
         Assert.assertEquals(redColor,getColor(vs.getVehicleUsed()));
     }
+
     @Test(priority = 2)
     public void vehiclePositiveTest() throws InterruptedException {
 
-
         //To do confirm the title of the page matches as expected.
-
         Thread.sleep(4000);
         VehicleSelection vs = new VehicleSelection(driver);
         selectByVisibleText("2017",vs.getVehicleYearSelect());
@@ -91,5 +71,6 @@ public class QuotaTest extends Base {
         selectByValue("6000",vs.getAnnualMileageSelect());
         vs.getAddNoNewCar().click();
     }
-*/
+
+
 }
