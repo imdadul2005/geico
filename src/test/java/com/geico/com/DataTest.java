@@ -15,32 +15,34 @@ public class DataTest extends Base {
 
     @BeforeTest
     public void setUPOS() {
-        driver = getLocalDriver("Windows", "chrome");
+        driver = getLocalDriver("Windows", "firefox");
     }
 
     @BeforeMethod
     public void setUp() throws IOException {
 
+        driver.manage().deleteAllCookies();
         setUp("http://www.geico.com");
     }
 
     @Test(dataProvider = "data")
     public void dataReader(String firstName, String lastName, String street, String apt, String zip, String DOB) throws IOException, InterruptedException {
         if(firstName!=null); //confirm data is not null
+        {
+            HomePage hp = new HomePage(driver);
+            hp.getSubmit().click();
 
-        HomePage hp = new HomePage(driver);
-        hp.getSubmit().click();
+            Thread.sleep(4000);
+            CustomerInformation ci = new CustomerInformation(driver);
+            ci.customerInfo(firstName, lastName, street, apt, zip, DOB);
+            ci.getNext().click();
 
-        Thread.sleep(2000);
-        CustomerInformation ci = new CustomerInformation(driver);
-        ci.customerInfo(firstName, lastName, street, apt, zip, DOB);
-        ci.getNext().click();
-
-        Thread.sleep(2000);
-        vehiclePositiveTest();
-        driverInfoTest();
-        discountsandcontactinfo();
-        quota();
+            Thread.sleep(4000);
+            vehiclePositiveTest();
+            driverInfoTest();
+            discountsandcontactinfo();
+            quota();
+        }
     }
 
     @DataProvider(name = "data")
@@ -60,7 +62,7 @@ public class DataTest extends Base {
 
     public void vehicleNegativeTest() throws InterruptedException {
 
-        Thread.sleep(2000);
+        Thread.sleep(4000);
         VehicleSelection vs = new VehicleSelection(driver);
         vs.getAddNoNewCar().click();
 
@@ -73,7 +75,7 @@ public class DataTest extends Base {
     }
 
     public void vehiclePositiveTest() throws InterruptedException {
-        Thread.sleep(2000);
+        Thread.sleep(4000);
         String source = driver.getPageSource();
         if (source.contains(errorMSG))
             testPage = false;
@@ -82,16 +84,20 @@ public class DataTest extends Base {
         //To do confirm the title of the page matches as expected.
 
         if (testPage) {
-            Thread.sleep(2000);
+            Thread.sleep(4000);
             VehicleSelection vs = new VehicleSelection(driver);
-            selectByVisibleText("2017",vs.getVehicleYearSelect());
-            selectByVisibleText("Honda",vs.getVehicleMakeSelect());
-            selectByVisibleText("Accord",vs.getVehicleModelSelect());
-            selectByIndex(1,vs.getBodyStyleSelect());
-            selectByIndex(1,vs.getAntiTheftDeviceSelect());
-            ListOfString(vs.getVehicleOwner(),"Owned").click();
-            ListOfString(vs.getPrimaryUse(),"Pleasure").click();
-            selectByValue("6000",vs.getAnnualMileageSelect());
+            selectByVisibleText("2015", vs.getVehicleYearSelect());
+            selectByVisibleText("Honda", vs.getVehicleMakeSelect());
+            selectByVisibleText("Accord LX", vs.getVehicleModelSelect());
+
+            try {
+                selectByIndex(2, vs.getBodyStyleSelect());
+            } catch (Exception e) {
+            }
+            selectByValue("40",vs.getAntiTheftDeviceSelect());
+            ListOfString(vs.getVehicleOwner(), "Owned").click();
+            ListOfString(vs.getPrimaryUse(), "Pleasure").click();
+            selectByValue("6000", vs.getAnnualMileageSelect());
             vs.getAddNoNewCar().click();
         }
         else
@@ -104,12 +110,14 @@ public class DataTest extends Base {
 
         //To do confirm the title of the page matches as expected.
 
+        //To do confirm the title of the page matches as expected.
+
         Thread.sleep(2000);
         String source = driver.getPageSource();
         if (source.contains(errorMSG))
             testPage = false;
 
-        //  Assert.assertEquals(testPage,test);
+      //  Assert.assertEquals(testPage,test);
 
         if (testPage) {
             Thread.sleep(2000);
@@ -119,26 +127,38 @@ public class DataTest extends Base {
             cr.getSsn().sendKeys("102125403");
             ListOfString(cr.getOwnOrRent(), "Own").click();
             selectByValue("N", cr.getHasInsuranceSelect());
-            cr.getAgeFirstLicense().sendKeys("19");
+            cr.getAgeFirstLicense().sendKeys("16");
             selectByValue("T", cr.getEducationSelect());
-            selectByValue("07", cr.getEducationSelect());
-            cr.getAddNoNewCar();
+            selectByValue("07", cr.getEmploySelect());
+            cr.getAddNoNewCar().click();
+            System.out.println("Clicked first Time");
+
+            Thread.sleep(5000);
+            CarDriver cr1 = new CarDriver(driver);
+            waitUntilClickAble(cr1.getAddNoNewCar());
+            cr1.getAddNoNewCar().click();
+            System.out.println("Clicked 2nd Time");
 
        /* url = driver.getCurrentUrl();
         Assert.assertEquals("driverhistory",url.contains("driverhistory"));
 */
-            Thread.sleep(2000);
-            cr.getAddNoNewCar();
+            Thread.sleep(4000);
+            try{
+                cr.getAddNoNewCar().click();
+            }catch(Exception e){
+
+            }
+
         }
         else{
-            System.out.println(incorrectMsg);
+            System.out.println("Incorrect , ");
         }
-        testPage = true;
+		testPage = true;
+		
     }
 
 
     public void discountsandcontactinfo () throws InterruptedException {
-        Thread.sleep(2000);
         String source = driver.getPageSource();
         if (source.contains(errorMSG))
             testPage = false;
@@ -147,14 +167,16 @@ public class DataTest extends Base {
 
 
             DetailPage dp = new DetailPage(driver);
-            dp.getSelectNo();
+            waitUntilVisible(dp.getSelectNo());
+            //  dp.getSelectNo().click();;
+            ListOfString(dp.getOptions(), "No").click();
             dp.getEmail().sendKeys("ihoq@gmail.com");
 
-            try {
+            /*try {
                 dp.getKeepOriginal().click();
             } catch (Exception e) {};
-
-            dp.getSubmit();
+            */
+            dp.getSubmit().click();
         }
         else
             System.out.println(incorrectMsg);
@@ -162,7 +184,7 @@ public class DataTest extends Base {
     }
 
     public void quota() throws InterruptedException {
-        Thread.sleep(2000);
+        Thread.sleep(4000);
         DetailPage dp = new DetailPage(driver);
         String url = driver.getCurrentUrl();
         String source = driver.getPageSource();

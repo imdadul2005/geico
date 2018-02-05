@@ -6,7 +6,7 @@
     <test name = "Geico">
         <classes>
             <class name="com.geico.com.QuotaTest"/>
+            <class name="com.geico.com.DataTest"/>
         </classes>
     </test>
-
 </suite>

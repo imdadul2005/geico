@@ -25,23 +25,22 @@ public class CarDriver {
     @FindBy (xpath = ".//*[@id='maritalStatus']") WebElement maritalStatusSelect;
     @FindBy (xpath = ".//input[@id='ssn']") WebElement ssn;
     @FindBy (css = ".//select[@id='hasAutoInsurance']") WebElement autoInsuranceSelect;
-    @FindBy (css = ".//*[@id='ageFirstLicensed']") WebElement ageFirstLicense;
-    @FindBy (xpath = "//button[@id='btnSubmit']") WebElement addNoNewCar;
-    @FindBy (css = ".//select[@id='highestEducation']") WebElement educationSelect;
+    @FindBy (xpath = ".//*[@id='ageFirstLicensed']") WebElement ageFirstLicense;
+    @FindBy (css = "button#btnSubmit") WebElement addNoNewCar;
+    @FindBy (xpath = ".//select[@id='highestEducation']") WebElement educationSelect;
     @FindBy (xpath = ".//*[@id='employmentStatus']") WebElement employSelect;
-
 
     public WebElement getHasInsuranceSelect() {
         return hasInsuranceSelect;
     }
 
     @FindBy(xpath = ".//*[@id='hasAutoInsurance']") WebElement hasInsuranceSelect;
-
     // This list will return all the radio button with primary . Use of radio can be alternate option
     @FindAll(@FindBy (xpath ="//label[contains(@for,'gender')]")) List<WebElement> gender;
     @FindAll(@FindBy (xpath ="//label[contains(@for,'ownOrRentHome')]")) List<WebElement> ownOrRent;
 
 
+	
     public WebElement getMaritalStatusSelect() {
         return maritalStatusSelect;
     }

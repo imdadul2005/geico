@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -50,6 +51,7 @@ public class Base {
                 System.setProperty("webdriver.chrome.driver", "../Geico/driver/chromedriver.exe");
             }
             driver = new ChromeDriver();
+            driver.manage().deleteAllCookies();
         }else if(browserName.equalsIgnoreCase("firefox")){
             if(OS.equalsIgnoreCase("OS X")){
                 System.setProperty("webdriver.gecko.driver", "../Geico/driver/geckodriver");
@@ -60,11 +62,15 @@ public class Base {
 
         } else if(browserName.equalsIgnoreCase("ie")) {
             System.setProperty("webdriver.ie.driver", "../Geico/driver/IEDriverServer.exe");
+            DesiredCapabilities ieCap =  DesiredCapabilities.internetExplorer();
+            ieCap.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);
             driver = new InternetExplorerDriver();
         }
+
         return driver;
 
     }
+
 
     public static void cleanUp(){
         driver.close();
@@ -236,7 +242,7 @@ public class Base {
     }
 
     public void waitUntilVisible(WebElement element){
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, 60);
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
@@ -244,9 +250,11 @@ public class Base {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
+	
     public void clearInput(String locator){
         driver.findElement(By.cssSelector(locator)).clear();
     }
+	
     public void keysInput(String locator){
         driver.findElement(By.cssSelector(locator)).sendKeys(Keys.ENTER);
     }

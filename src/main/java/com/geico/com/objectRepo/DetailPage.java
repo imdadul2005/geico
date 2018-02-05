@@ -22,17 +22,17 @@ public class DetailPage {
         PageFactory.initElements(driver,this);
 
     }
-
     public WebElement getSelectNo() {
-        return selectNo;
-    }
-
+			return selectNo;
+		}
+	
+	@FindAll(@FindBy (xpath ="//label[contains(@for,'defensiveDriver')]")) List<WebElement> options;
     @FindBy(xpath = ".//*[@id='discountForm']/div[1]/div[3]/div[2]/div/div/div/div[2]/div[2]/label") WebElement selectNo;
     @FindAll(@FindBy (xpath ="//div[@class='radio-button-group']/div/input"))  List<WebElement> defenseDriver;
     @FindAll(@FindBy (xpath =".//form[@id='discountForm']/div[1]/div[3]/div[3]/div[1]/div/div/div"))  List<WebElement> group;
     @FindBy (xpath = ".//input[@id='email']") WebElement emailAddress;
     @FindBy (xpath = "//div[@class='page-group']/div/div[2]/label") WebElement keepOriginal;
-    @FindBy(xpath = ".//*[@id='submitButton']") WebElement submit;
+    @FindBy(xpath = ".//button[@id='btnSubmit']") WebElement submit;
     @FindBy (xpath = ".//*[@id='email']") WebElement email;
 
     public WebElement getContinue1() {
@@ -52,7 +52,11 @@ public class DetailPage {
     public List<WebElement> getGroup() {
         return group;
     }
-
+	
+	 public List<WebElement> getOptions() {
+        return options;
+    }
+	
     public WebElement getEmailAddress() {
         return emailAddress;
     }

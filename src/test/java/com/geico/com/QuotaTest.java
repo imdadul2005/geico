@@ -13,7 +13,6 @@ import org.testng.annotations.Test;
 import org.openqa.selenium.support.Color;
 import utility.DataReader;
 
-
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -23,7 +22,7 @@ public class QuotaTest extends Base {
 
     @BeforeClass
     public void setUP() throws IOException {
-        driver = getLocalDriver("Windows", "chrome");
+        driver = getLocalDriver("Windows", "firefox");
         setUp("http://www.geico.com");
     }
 
@@ -34,13 +33,13 @@ public class QuotaTest extends Base {
 
         Thread.sleep(2000);
         CustomerInformation ci = new CustomerInformation(driver);
-        ci.customerInfo("Joseph","Adma", "23 Broadway", "3B", "11720", "10/19/1977");
+        ci.customerInfo("Adam","Ji", "7035 Broadway", "3B", "11372", "10/19/1977");
         ci.getNext().click();
     }
 
     // This it to test that next button on Vehicles page display Year and How is this vehicle primarily used? in red
 
-    @Test(dependsOnMethods = "test")
+   /* @Test(dependsOnMethods = "test")
     public void vehicleNegativeTest() throws InterruptedException {
 
         Thread.sleep(4000);
@@ -53,7 +52,7 @@ public class QuotaTest extends Base {
         // Assert that clicking next button on this page will change How is this vehicle primarily used? color
         Assert.assertEquals(redColor,getColor(vs.getVehicleUsed()));
     }
-
+*/
     @Test(dependsOnMethods = "test")
 
     public void vehiclePositiveTest() throws InterruptedException {
@@ -68,15 +67,15 @@ public class QuotaTest extends Base {
         if (testPage) {
             Thread.sleep(4000);
             VehicleSelection vs = new VehicleSelection(driver);
-            selectByVisibleText("2014", vs.getVehicleYearSelect());
+            selectByVisibleText("2015", vs.getVehicleYearSelect());
             selectByVisibleText("Honda", vs.getVehicleMakeSelect());
-            selectByVisibleText("Accord", vs.getVehicleModelSelect());
+            selectByVisibleText("Accord LX", vs.getVehicleModelSelect());
 
             try {
-                selectByIndex(1, vs.getBodyStyleSelect());
+                selectByIndex(2, vs.getBodyStyleSelect());
             } catch (Exception e) {
             }
-            selectByIndex(1, vs.getAntiTheftDeviceSelect());
+            selectByValue("40",vs.getAntiTheftDeviceSelect());
             ListOfString(vs.getVehicleOwner(), "Owned").click();
             ListOfString(vs.getPrimaryUse(), "Pleasure").click();
             selectByValue("6000", vs.getAnnualMileageSelect());
@@ -108,14 +107,25 @@ public class QuotaTest extends Base {
             selectByValue("N", cr.getHasInsuranceSelect());
             cr.getAgeFirstLicense().sendKeys("19");
             selectByValue("T", cr.getEducationSelect());
-            selectByValue("07", cr.getEducationSelect());
-            cr.getAddNoNewCar();
+            selectByValue("07", cr.getEmploySelect());
+            cr.getAddNoNewCar().click();
+			System.out.println("Clicked first Time");
+			
+			Thread.sleep(5000);
+			CarDriver cr1 = new CarDriver(driver);
+			waitUntilClickAble(cr1.getAddNoNewCar());
+			cr1.getAddNoNewCar().click();
+			System.out.println("Clicked 2nd Time");
 
        /* url = driver.getCurrentUrl();
         Assert.assertEquals("driverhistory",url.contains("driverhistory"));
 */
             Thread.sleep(4000);
-            cr.getAddNoNewCar();
+			try{
+            cr.getAddNoNewCar().click();
+			}catch(Exception e){
+				
+			}
         }
         else{
             System.out.println("Incorrect , ");
@@ -133,14 +143,16 @@ public class QuotaTest extends Base {
 
 
             DetailPage dp = new DetailPage(driver);
-            dp.getSelectNo();
+			waitUntilVisible(dp.getSelectNo());
+		    ListOfString(dp.getOptions(), "No").click();
             dp.getEmail().sendKeys("ihoq@gmail.com");
 
-            try {
+            //Expect user to set correct address ignoring incorrect address checking for now.
+          /*  try {
                 dp.getKeepOriginal().click();
             } catch (Exception e) {};
-
-            dp.getSubmit();
+          */
+            dp.getSubmit().click();
         }
         else
             System.out.println(incorrectMsg);
@@ -163,9 +175,10 @@ public class QuotaTest extends Base {
         else
             System.out.println(incorrectMsg);
     }
-
-    @AfterTest
+	
+    /*@AfterTest
     public void clean(){
         cleanUp();
-    }
+    }*/
+	
 }
