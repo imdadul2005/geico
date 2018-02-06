@@ -1,7 +1,0 @@
-common\Base.class
-com\geico\com\objectRepo\CarDriver.class
-com\geico\com\objectRepo\DetailPage.class
-com\geico\com\objectRepo\VehicleSelection.class
-utility\DataReader.class
-com\geico\com\objectRepo\HomePage.class
-com\geico\com\objectRepo\CustomerInformation.class

@@ -22,19 +22,26 @@ public class QuotaTest extends Base {
 
     @BeforeClass
     public void setUP() throws IOException {
-        driver = getLocalDriver("Windows", "firefox");
+
+        String os = "Windows";
+        String browserName = "Firefox";
+
+        driver = getLocalDriver(os, browserName);
+        driver.manage().deleteAllCookies();
         setUp("http://www.geico.com");
     }
 
     @Test(priority = 0)
     public void test() throws InterruptedException {
+        Thread.sleep(3000);
         HomePage hp = new HomePage(driver);
         hp.getSubmit().click();
 
         Thread.sleep(2000);
         CustomerInformation ci = new CustomerInformation(driver);
-        ci.customerInfo("Adam","Ji", "7035 Broadway", "3B", "11372", "10/19/1977");
-        ci.getNext().click();
+        ci.customerInfo("Adam","Hoq", "7035 Broadway", "3B", "11372", "10/19/1980");
+        Thread.sleep(2000);
+     //   ci.getNext().click();
     }
 
     // This it to test that next button on Vehicles page display Year and How is this vehicle primarily used? in red
@@ -57,6 +64,14 @@ public class QuotaTest extends Base {
 
     public void vehiclePositiveTest() throws InterruptedException {
 
+
+        String vehicleYear = "2014";
+        String vehicleMake = "Honda";
+        String vehicleModel = "Accord LX";
+        String use = "Pleasure";
+        String ownerType ="Owner";
+
+
         String source = driver.getPageSource();
         if (source.contains(errorMSG))
             testPage = false;
@@ -67,19 +82,20 @@ public class QuotaTest extends Base {
         if (testPage) {
             Thread.sleep(4000);
             VehicleSelection vs = new VehicleSelection(driver);
-            selectByVisibleText("2015", vs.getVehicleYearSelect());
-            selectByVisibleText("Honda", vs.getVehicleMakeSelect());
-            selectByVisibleText("Accord LX", vs.getVehicleModelSelect());
+            selectByVisibleText(vehicleYear, vs.getVehicleYearSelect());
+            selectByVisibleText(vehicleMake, vs.getVehicleMakeSelect());
+            selectByVisibleText(vehicleModel, vs.getVehicleModelSelect());
 
             try {
                 selectByIndex(2, vs.getBodyStyleSelect());
             } catch (Exception e) {
             }
             selectByValue("40",vs.getAntiTheftDeviceSelect());
-            ListOfString(vs.getVehicleOwner(), "Owned").click();
-            ListOfString(vs.getPrimaryUse(), "Pleasure").click();
+            ListOfString(vs.getVehicleOwner(), ownerType).click();
+            ListOfString(vs.getPrimaryUse(), use).click();
             selectByValue("6000", vs.getAnnualMileageSelect());
-            vs.getAddNoNewCar().click();
+            Thread.sleep(2000);
+       //     vs.getAddNoNewCar().click();
           }
         else
             System.out.println(incorrectMsg);
@@ -89,6 +105,10 @@ public class QuotaTest extends Base {
     public void driverInfoTest() throws InterruptedException {
 
         //To do confirm the title of the page matches as expected.
+
+        String gender = "Female";
+        String ssn ="102125403";
+        String houseType="Own";
 
         Thread.sleep(2000);
         String source = driver.getPageSource();
@@ -101,13 +121,14 @@ public class QuotaTest extends Base {
             Thread.sleep(2000);
             CarDriver cr = new CarDriver(driver);
             selectByValue("S", cr.getMaritalStatusSelect());
-            ListOfString(cr.getGender(), "Female").click();
-            cr.getSsn().sendKeys("102125403");
-            ListOfString(cr.getOwnOrRent(), "Own").click();
+            ListOfString(cr.getGender(), gender).click();
+            cr.getSsn().sendKeys(ssn);
+            ListOfString(cr.getOwnOrRent(), houseType).click();
             selectByValue("N", cr.getHasInsuranceSelect());
             cr.getAgeFirstLicense().sendKeys("19");
             selectByValue("T", cr.getEducationSelect());
             selectByValue("07", cr.getEmploySelect());
+            Thread.sleep(2000);
             cr.getAddNoNewCar().click();
 			System.out.println("Clicked first Time");
 			
@@ -128,7 +149,7 @@ public class QuotaTest extends Base {
 			}
         }
         else{
-            System.out.println("Incorrect , ");
+            System.out.println(incorrectMsg);
         }
     }
 

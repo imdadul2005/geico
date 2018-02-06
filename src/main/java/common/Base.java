@@ -66,15 +66,14 @@ public class Base {
             ieCap.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);
             driver = new InternetExplorerDriver();
         }
-
         return driver;
 
     }
 
-
     public static void cleanUp(){
         driver.close();
     }
+
     public void clickByCss(String locator) {
         driver.findElement(By.cssSelector(locator)).click();
     }

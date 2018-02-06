@@ -15,7 +15,9 @@ public class DataTest extends Base {
 
     @BeforeTest
     public void setUPOS() {
-        driver = getLocalDriver("Windows", "firefox");
+        String os = "Windows";
+        String browserName = "Firefox";
+        driver = getLocalDriver(os, browserName);
     }
 
     @BeforeMethod
@@ -81,7 +83,7 @@ public class DataTest extends Base {
             testPage = false;
 
         // Assert.assertEquals(testPage,test);
-        //To do confirm the title of the page matches as expected.
+        // To do confirm the title of the page matches as expected.
 
         if (testPage) {
             Thread.sleep(4000);
